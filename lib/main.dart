@@ -60,17 +60,18 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     controller
+      ..loadRequest(Uri.parse('about:blank'))
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {},
           onPageStarted: (String url) {
-            _logs.add('onPageStarted called');
+            _logs.add('onPageStarted called: $url');
             setState(() {});
           },
           onPageFinished: (String url) {
-            _logs.add('onPageFinished called');
+            _logs.add('onPageFinished called: $url');
             setState(() {});
           },
           onWebResourceError: (WebResourceError error) {},
@@ -127,17 +128,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  ListView.builder(
-                    itemCount: _logs.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      final log = _logs[index];
-                      return ListTile(
-                        leading: const Icon(Icons.abc),
-                        title: Text(log),
-                      );
-                    },
-                  )
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _logs.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        final log = _logs[index];
+                        return ListTile(
+                          leading: const Icon(Icons.abc),
+                          title: Text(log),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
